@@ -12,8 +12,6 @@ const port = process.env.PORT || 3000;
 const database = new Datastore('localizations.db');
 database.loadDatabase();
 
-console.log(process.env.Leaflet_key);
-
 app.post('/add',(req,res)=>{
     console.log(req.body);
     try{
