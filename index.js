@@ -7,6 +7,8 @@ const app = express()
 app.use(express.static('public'));
 app.use(express.json({limit: '1mb'}));
 
+const port = process.env.PORT || 3000;
+
 const database = new Datastore('localizations.db');
 database.loadDatabase();
 
@@ -78,4 +80,4 @@ app.get('/map',(req,res)=>{
     catch(err){console.log(err)};
 });
 
-app.listen(3000, ()=>{console.log("Running on port 3000...")})
+app.listen(port, ()=>{console.log("Running on port 3000...")})
