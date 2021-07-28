@@ -5,18 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="style.css">
     <title>Location map</title>
 </head>
 <body>
-    <h2>Localisation Map</h2>
-    <p>Add your localization with description and look at <a href="/map">this map</a></p>
+    <div class="title">
+        <h2>Localisation Map</h2>
+        <p>Add your localization with description and look at <a href="/map">this map</a></p>
+    </div>
+    
+    
+    <span id="lat">latitude: </span>
+    <span id="lon">longitude: </span>
+    <div id="response"></div>
+    <input type="text" id="desc" placeholder="descriprion">    
     <button onclick="add_localisation()">Add Locatization</button><br/>
-    <span id="lat">latitude: </span><br/>
-    <span id="lon">longitude: </span><br/>
-    <br/>
-    <input type="text" id="desc">
     <script>
         let lat=null,lon=null;
+        let add_loc = true;
         if('geolocation' in navigator){
         console.log("Localization is avaliable");
 
@@ -32,6 +44,7 @@
         }
          
         async function add_localisation(){
+            if(!add_loc) return;
             if(lat==null || lon==null) {console.log("Wait for localization");return;}
             const desc = document.getElementById("desc").value;
             const data = {
@@ -50,6 +63,8 @@
             const response = await fetch('/add',options);
             const json = await response.json();
             console.log(json);
+            document.getElementById("response").innerHTML = `<span>${json.status}</span>`;
+            add_loc=false;
         }
     </script>
 </body>

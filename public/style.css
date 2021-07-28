@@ -1,0 +1,87 @@
+body{
+    background-color: black;
+    color: yellow;
+    font-size: 80px;
+}
+
+p{
+    font-size: 0.3em;
+}
+
+a{
+    color: yellow;
+    text-decoration:none;
+    transition: 1s;
+}
+
+a:hover{
+    color: orange;
+    
+    font-size: 1.1em;
+}
+
+#lat,#lon{
+    font-size: 0.4em;
+    font-family: 'Teko', sans-serif;
+    display: block;
+    text-align: center;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button{
+    font-size: 0.5em;
+    font-family: 'Oswald', sans-serif;
+    display: block;
+    text-align: center;
+    width: 50vw;
+    height: 70px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background-color: yellow;
+}
+
+#response{
+    font-family: 'Teko', sans-serif;
+    font-size: 0.3em;
+    color:lightgreen;
+    text-align: center;
+    width: 50vw;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover{
+    background-color: orange;
+    transition: 1s;
+}
+
+#desc{
+    margin-top: 30px;
+    display: block;
+    text-align: center;
+    width: 30vw;
+    height: 60px;
+    font-size: 0.4em;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    color: white;
+    background-color: gray;
+}
+
+h2{
+    margin-bottom: 0;
+}
+
+.title{
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+}
