@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <title>Localizations map</title>
+
+</head>
+<body>
+    <div id="mapid" style="height:90vh"></div>
+    <script>
+        let markers = [];
+        var mymap = L.map('mapid').setView([0,0], 2);
+        
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWlsZXNlayIsImEiOiJja2QxcTRndzMxNjBjMndvdWNyajcyMmk3In0.KBVnb3E-a7qF7jOLKAtsjA', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 20,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWlsZXNlayIsImEiOiJja2QxcTRndzMxNjBjMndvdWNyajcyMmk3In0.KBVnb3E-a7qF7jOLKAtsjA'
+        }).addTo(mymap);
+
+        getLocalizations();
+        async function getLocalizations(){
+            const promise = await fetch('/all');
+            const json = await promise.json();
+            drawMap(json);
+        }
+
+        function drawMap(localizations){
+            let i=0;
+            for(let loc of localizations){
+                const lat = loc.latitude;
+                const lon = loc.longitude;
+                const desc = loc.description;
+                const time = new Date(loc.time).toLocaleString();
+                console.log({lat,lon,desc,time});
+                markers.push(L.marker([lat, lon]).addTo(mymap));
+                markers[i].bindPopup(time+"<br/>"+desc).openPopup();
+                i++;
+            }
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="#">
+    <title>Location map</title>
+</head>
+<body>
+    <h2>Localisation Map</h2>
+    <p>Add your localization with description and look at <a href="/map">this map</a></p>
+    <button onclick="add_localisation()">Add Locatization</button><br/>
+    <span id="lat">latitude: </span><br/>
+    <span id="lon">longitude: </span><br/>
+    <br/>
+    <input type="text" id="desc">
+    <script>
+        let lat=null,lon=null;
+        if('geolocation' in navigator){
+        console.log("Localization is avaliable");
+
+        navigator.geolocation.getCurrentPosition((position)=>{
+            console.log("position was getted");
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            document.getElementById('lat').innerHTML+=lat+"&deg";
+            document.getElementById('lon').innerHTML+=lon+"&deg";
+        },(err)=>console.warn(`ERROR(${err.code}): ${err.message}`),{enableHighAccuracy: true});
+        }else{
+            console.log("Localization is not avaliable");
+        }
+         
+        async function add_localisation(){
+            if(lat==null || lon==null) {console.log("Wait for localization");return;}
+            const desc = document.getElementById("desc").value;
+            const data = {
+                lat: lat,
+                lon: lon,
+                description: desc,
+            }
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+            };
+
+            const response = await fetch('/add',options);
+            const json = await response.json();
+            console.log(json);
+        }
+    </script>
+</body>
+</html>
