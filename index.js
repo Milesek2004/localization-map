@@ -1,6 +1,7 @@
 const express = require('express')
 const Datastore = require('nedb')
 const path = require('path');
+require('dotenv').config();
 const app = express()
 
 app.use(express.static('public'));
@@ -8,6 +9,8 @@ app.use(express.json({limit: '1mb'}));
 
 const database = new Datastore('localizations.db');
 database.loadDatabase();
+
+console.log(process.env.Leaflet_key);
 
 app.post('/add',(req,res)=>{
     console.log(req.body);
@@ -35,6 +38,10 @@ app.get('/all',(req,res)=>{
         }
         res.json(data);
     });
+});
+
+app.get('/key',(req,res)=>{
+    res.json({key:process.env.Leaflet_key});
 });
 
 app.get('/all/:id',(req,res)=>{

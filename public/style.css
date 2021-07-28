@@ -2,6 +2,7 @@ body{
     background-color: black;
     color: yellow;
     font-size: 80px;
+    margin: 0;
 }
 
 p{
@@ -10,7 +11,7 @@ p{
 
 a{
     color: yellow;
-    text-decoration:none;
+    text-decoration: underline;
     transition: 1s;
 }
 
@@ -84,4 +85,11 @@ h2{
     width: 80vw;
     margin-left: auto;
     margin-right: auto;
+}
+
+#mapid{
+    margin-left: auto;
+    margin-right: auto;
+    height:50vh;
+    width: 60vw;
 }
