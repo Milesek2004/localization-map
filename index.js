@@ -40,12 +40,14 @@ app.post('/add',(req,res)=>{
         time:Date.now()
     };
 
-    db.collection('localizations').deleteMany({"latitude": pos_time.latitude, "longitude": pos_time.longitude});
+    const delta = 0.0001;
+
+    db.collection('localizations').deleteMany({$and: [{latitude:{$gt: pos_time.latitude-delta}},{latitude:{$lt: pos_time.latitude+delta}},{longitude:{$gt: pos_time.longitude-delta}},{longitude:{$lt: pos_time.longitude+delta}}]});
 
     db.collection('localizations').insertOne(pos_time,(err,results)=>{
         if(err) console.log(err);
         else{
-            //console.log(results);
+            console.log(results);
             res.json({status:"Location was added"});
         }
     });
@@ -55,7 +57,7 @@ app.post('/add',(req,res)=>{
 app.get('/all',(req,res)=>{
     db.collection('localizations').find({}).toArray((err, data) => {
         if(err) console.log(err);
-        console.log(data);
+        //console.log(data);
         res.json(data);
     })
 });
@@ -67,15 +69,15 @@ app.get('/key',(req,res)=>{
 app.get('/all/:id',(req,res)=>{
     console.log(`Searching for: ${req.params.id}`);
     
-    db.collection('localizations').find({_id: ObjectId("6102798fa2cf1d9ec36395eb")}).toArray((err, data) => {
+    db.collection('localizations').find({_id: ObjectId(req.params.id)}).toArray((err, data) => {
         if(err) console.log(err);
-        console.log(data);
+        //console.log(data);
         res.json(data);
     })
 });
 
 app.get('/pos/:latlon',(req,res)=>{
-    console.log(`Searching for records on position: ${req.params.latlon}`);
+    //console.log(`Searching for records on position: ${req.params.latlon}`);
     const position = req.params.latlon.split(',');
     
     const lat = parseFloat(position[0]);
@@ -84,7 +86,7 @@ app.get('/pos/:latlon',(req,res)=>{
     
     db.collection('localizations').find({"latitude": lat,"longitude": lon}).toArray((err, data) => {
         if(err) console.log(err);
-        console.log(data);
+        //console.log(data);
         res.json(data);
     })
 });

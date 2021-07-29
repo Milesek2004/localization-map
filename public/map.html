@@ -18,12 +18,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">  
     <link rel="stylesheet" href="style.css">
-    <title>Localizations map</title>
+    <title>Localisations map</title>
 
 </head>
 <body>
     <div class="title">
-        <h2>Localizations Map</h2>
+        <h2>Localisations Map</h2>
         <p>Maybe you can find yourself...</p>
     </div>
     <div id="mapid"></div>
@@ -47,11 +47,11 @@
 
         getLocalizations();
         async function getLocalizations(){
-            console.log("start getting");
+            //console.log("start getting");
             const promise = await fetch('/all');
             const json = await promise.json();
-            console.log("end");
-            console.log(json);
+            //console.log("end");
+            //console.log(json);
             drawMap(json);
         }
 
@@ -62,7 +62,7 @@
                 const lon = loc.longitude;
                 const desc = loc.description;
                 const time = new Date(loc.time).toLocaleString();
-                console.log({lat,lon,desc,time});
+                //console.log({lat,lon,desc,time});
                 markers.push(L.marker([lat, lon]).addTo(mymap));
                 markers[i].bindPopup(time+"<br/>"+desc).openPopup();
                 i++;
