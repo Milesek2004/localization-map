@@ -39,10 +39,13 @@ app.post('/add',(req,res)=>{
         description: req.body.description,
         time:Date.now()
     };
+
+    db.collection('localizations').deleteMany({"latitude": pos_time.latitude, "longitude": pos_time.longitude});
+
     db.collection('localizations').insertOne(pos_time,(err,results)=>{
         if(err) console.log(err);
         else{
-            console.log(results);
+            //console.log(results);
             res.json({status:"Location was added"});
         }
     });
