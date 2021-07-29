@@ -47,8 +47,11 @@
 
         getLocalizations();
         async function getLocalizations(){
+            console.log("start getting");
             const promise = await fetch('/all');
             const json = await promise.json();
+            console.log("end");
+            console.log(json);
             drawMap(json);
         }
 
